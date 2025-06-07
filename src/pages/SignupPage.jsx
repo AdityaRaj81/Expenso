@@ -32,14 +32,14 @@ const SignupPage = () => {
       toast.error(error)
     }
   }, [error])
-
+  // ...existing code...
   const onSubmit = async (data) => {
     try {
-      const { confirmPassword, ...userData } = data
-      await dispatch(registerUser(userData)).unwrap()
+      // Only extract the fields you need
+      await dispatch(registerUser(data)).unwrap()
       toast.success('Account created successfully!')
       navigate('/dashboard')
-    } catch (error) {
+    } catch {
       // Error is handled by the slice and toast
     }
   }
@@ -57,7 +57,7 @@ const SignupPage = () => {
               Expenso
             </span>
           </Link>
-          
+
           <h2 className="text-3xl font-heading font-bold text-text-primary dark:text-dark-text">
             Create your account
           </h2>
