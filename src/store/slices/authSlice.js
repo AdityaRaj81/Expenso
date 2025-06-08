@@ -38,13 +38,22 @@ export const logoutUser = createAsyncThunk(
   }
 )
 
+const item = localStorage.getItem('user')
+let savedUser = null
+try {
+  savedUser = item ? JSON.parse(item) : null
+} catch {
+  savedUser = null
+}
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: savedUser,
   token: localStorage.getItem('token') || null,
   isAuthenticated: !!localStorage.getItem('token'),
   loading: false,
   error: null,
 }
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -84,7 +93,7 @@ const authSlice = createSlice({
         state.error = action.payload
         state.isAuthenticated = false
       })
-      
+
       // Register
       .addCase(registerUser.pending, (state) => {
         state.loading = true
@@ -104,7 +113,7 @@ const authSlice = createSlice({
         state.error = action.payload
         state.isAuthenticated = false
       })
-      
+
       // Logout
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null
