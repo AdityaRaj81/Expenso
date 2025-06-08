@@ -1,44 +1,39 @@
-import api from './api'
+import { signupUser, loginUser } from '../api/authApi'
 
 const authService = {
   async login(credentials) {
-    const response = await api.post('/auth/login', credentials)
+    const response = await loginUser(credentials)
     return response.data
   },
 
   async register(userData) {
-    const response = await api.post('/auth/register', userData)
+    const response = await signupUser(userData)
     return response.data
   },
 
+  // You can later implement these if your backend supports them
   async logout() {
-    const response = await api.post('/auth/logout')
-    return response.data
+    return { message: 'Logout functionality not implemented yet.' }
   },
 
   async refreshToken() {
-    const response = await api.post('/auth/refresh')
-    return response.data
+    return { message: 'Refresh token not implemented yet.' }
   },
 
   async forgotPassword(email) {
-    const response = await api.post('/auth/forgot-password', { email })
-    return response.data
+    return { message: 'Forgot password not implemented yet.' }
   },
 
   async resetPassword(token, password) {
-    const response = await api.post('/auth/reset-password', { token, password })
-    return response.data
+    return { message: 'Reset password not implemented yet.' }
   },
 
   async updateProfile(userData) {
-    const response = await api.put('/auth/profile', userData)
-    return response.data
+    return { message: 'Update profile not implemented yet.' }
   },
 
   async changePassword(passwordData) {
-    const response = await api.put('/auth/change-password', passwordData)
-    return response.data
+    return { message: 'Change password not implemented yet.' }
   },
 }
 
