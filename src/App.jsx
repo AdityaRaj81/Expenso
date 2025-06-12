@@ -31,7 +31,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-background dark:bg-dark-bg">
+      <div className="h-screen w-full overflow-hidden bg-background dark:bg-dark-bg">
         <Toaster
           position="top-right"
           toastOptions={{
@@ -55,20 +55,20 @@ function App() {
             },
           }}
         />
-        
+
         <Routes>
           {/* Public Routes */}
-          <Route 
-            path="/" 
-            element={isAuthenticated ? <Navigate to="/dashboard" /> : <LandingPage />} 
+          <Route
+            path="/"
+            element={isAuthenticated ? <Navigate to="/dashboard" /> : <LandingPage />}
           />
-          <Route 
-            path="/login" 
-            element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />} 
+          <Route
+            path="/login"
+            element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />}
           />
-          <Route 
-            path="/signup" 
-            element={isAuthenticated ? <Navigate to="/dashboard" /> : <SignupPage />} 
+          <Route
+            path="/signup"
+            element={isAuthenticated ? <Navigate to="/dashboard" /> : <SignupPage />}
           />
 
           {/* Protected Routes */}
@@ -79,7 +79,7 @@ function App() {
               </Layout>
             </ProtectedRoute>
           } />
-          
+
           <Route path="/transactions" element={
             <ProtectedRoute>
               <Layout>
@@ -87,7 +87,7 @@ function App() {
               </Layout>
             </ProtectedRoute>
           } />
-          
+
           <Route path="/add-transaction" element={
             <ProtectedRoute>
               <Layout>
@@ -95,7 +95,7 @@ function App() {
               </Layout>
             </ProtectedRoute>
           } />
-          
+
           <Route path="/edit-transaction/:id" element={
             <ProtectedRoute>
               <Layout>
@@ -103,7 +103,7 @@ function App() {
               </Layout>
             </ProtectedRoute>
           } />
-          
+
           <Route path="/reports" element={
             <ProtectedRoute>
               <Layout>
@@ -111,7 +111,7 @@ function App() {
               </Layout>
             </ProtectedRoute>
           } />
-          
+
           <Route path="/profile" element={
             <ProtectedRoute>
               <Layout>
