@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { 
-  Home, 
-  CreditCard, 
-  PlusCircle, 
-  BarChart3, 
-  User, 
-  Menu, 
-  X, 
+import {
+  Home,
+  CreditCard,
+  PlusCircle,
+  BarChart3,
+  User,
+  Menu,
+  X,
   LogOut,
   Moon,
   Sun
@@ -48,19 +48,23 @@ const Layout = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen bg-background dark:bg-dark-bg">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:static lg:inset-0`}>
+      <aside
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out 
+        flex flex-col h-screen
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
+      >
+        {/* Header */}
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200 dark:border-gray-700">
           <Link to="/dashboard" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-cta rounded-lg flex items-center justify-center">
@@ -78,73 +82,77 @@ const Layout = ({ children }) => {
           </button>
         </div>
 
-        <nav className="mt-6 px-3">
-          <div className="space-y-1">
-            {navigation.map((item) => {
-              const isActive = location.pathname === item.href
-              return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200 ${
-                    isActive
+        {/* Nav + Bottom */}
+        <div className="flex flex-col flex-1 justify-between overflow-y-auto">
+          {/* Nav Links */}
+          <nav className="mt-6 px-3">
+            <div className="space-y-1">
+              {navigation.map((item) => {
+                const isActive = location.pathname === item.href
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`group flex items-center px-3 py-3 text-sm font-medium rounded-lg transition-colors duration-200 ${isActive
                       ? 'bg-primary text-white'
                       : 'text-text-secondary dark:text-gray-300 hover:bg-surface dark:hover:bg-gray-700 hover:text-text-primary dark:hover:text-white'
-                  }`}
-                  onClick={() => setSidebarOpen(false)}
-                >
-                  <item.icon className={`mr-3 h-5 w-5 ${
-                    isActive ? 'text-white' : 'text-text-secondary dark:text-gray-400'
-                  }`} />
-                  {item.name}
-                </Link>
-              )
-            })}
-          </div>
-        </nav>
+                      }`}
+                    onClick={() => setSidebarOpen(false)}
+                  >
+                    <item.icon className={`mr-3 h-5 w-5 ${isActive ? 'text-white' : 'text-text-secondary dark:text-gray-400'
+                      }`} />
+                    {item.name}
+                  </Link>
+                )
+              })}
+            </div>
+          </nav>
 
-        {/* User info and actions */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">
-                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
-                </span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-text-primary dark:text-dark-text truncate">
-                  {user?.name || 'User'}
-                </p>
-                <p className="text-xs text-text-secondary dark:text-gray-400 truncate">
-                  {user?.email}
-                </p>
+          {/* Bottom User/Theme/Logout */}
+          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">
+                    {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-text-primary dark:text-dark-text truncate">
+                    {user?.name || 'User'}
+                  </p>
+                  <p className="text-xs text-text-secondary dark:text-gray-400 truncate">
+                    {user?.email}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <button
-              onClick={handleThemeToggle}
-              className="p-2 rounded-lg text-text-secondary dark:text-gray-400 hover:bg-surface dark:hover:bg-gray-700 transition-colors duration-200"
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-            </button>
-            
-            <button
-              onClick={handleLogout}
-              className="p-2 rounded-lg text-text-secondary dark:text-gray-400 hover:bg-surface dark:hover:bg-gray-700 hover:text-error transition-colors duration-200"
-              title="Logout"
-            >
-              <LogOut className="w-5 h-5" />
-            </button>
+
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handleThemeToggle}
+                className="p-2 rounded-lg text-text-secondary dark:text-gray-400 hover:bg-surface dark:hover:bg-gray-700 transition-colors duration-200"
+                title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              >
+                {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              </button>
+
+              <button
+                onClick={handleLogout}
+                className="p-2 rounded-lg text-text-secondary dark:text-gray-400 hover:bg-surface dark:hover:bg-gray-700 hover:text-error transition-colors duration-200"
+                title="Logout"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </aside>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="flex-1 flex flex-col transition-all duration-300">
+
+
         {/* Top bar */}
         <div className="sticky top-0 z-30 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between h-16 px-4 sm:px-6">
@@ -154,9 +162,9 @@ const Layout = ({ children }) => {
             >
               <Menu className="w-6 h-6" />
             </button>
-            
+
             <div className="flex-1 lg:hidden" />
-            
+
             <div className="flex items-center space-x-4 lg:hidden">
               <button
                 onClick={handleThemeToggle}
@@ -169,7 +177,7 @@ const Layout = ({ children }) => {
         </div>
 
         {/* Page content */}
-        <main className="p-4 sm:p-6">
+        <main className="p-4 sm:p-6 flex-1 overflow-y-auto">
           {children}
         </main>
       </div>
