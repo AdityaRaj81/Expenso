@@ -42,7 +42,7 @@ const Dashboard = () => {
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-text-primary dark:text-dark-text">
-            Welcome back, {user?.name?.split(' ')[0] || 'User'}!
+            Welcome, {user?.name?.split(' ')[0] || 'User'} !
           </h1>
           <p className="text-text-secondary dark:text-gray-300">
             Here's your financial overview for this month
