@@ -12,7 +12,7 @@ const transactionService = {
   },
 
   async createTransaction(transactionData) {
-    const response = await api.post('/transactions', transactionData)
+    const response = await api.post('/transactions/add', transactionData)
     return response.data
   },
 
@@ -42,7 +42,7 @@ const transactionService = {
   },
 
   async exportTransactions(params = {}) {
-    const response = await api.get('/transactions/export', { 
+    const response = await api.get('/transactions/export', {
       params,
       responseType: 'blob'
     })
