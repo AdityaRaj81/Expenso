@@ -71,7 +71,7 @@ const Layout = ({ children }) => {
 
             <div className="w-8 h-8 rounded-lg flex items-center justify-center">
 
-              <img src="src\assets\logo_1.png" alt="Expenso logo" srcset="" />
+              <img src="/logo_1.png" alt="Expenso logo" />
 
             </div>
             <span className="text-xl font-logo font-bold text-text-primary dark:text-dark-text">
