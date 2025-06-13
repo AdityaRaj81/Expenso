@@ -67,12 +67,17 @@ const Layout = ({ children }) => {
         {/* Header */}
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200 dark:border-gray-700">
           <Link to="/dashboard" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-cta rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">E</span>
+
+
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+
+              <img src="src\assets\logo_1.png" alt="Expenso logo" srcset="" />
+
             </div>
             <span className="text-xl font-logo font-bold text-text-primary dark:text-dark-text">
               Expenso
             </span>
+
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
