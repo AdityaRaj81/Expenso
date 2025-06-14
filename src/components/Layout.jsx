@@ -39,7 +39,8 @@ const Layout = ({ children }) => {
       toast.success('Logged out successfully')
       navigate('/login')
     } catch (error) {
-      toast.error('Logout failed')
+      console.error('Logout failed:', error)
+      toast.error(error?.message || 'Logout failed')
     }
   }
 
