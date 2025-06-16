@@ -36,10 +36,10 @@ const AddTransactionPage = () => {
         amount: parseFloat(data.amount),
         type: transactionType,
       })).unwrap()
-      
+
       toast.success('Transaction added successfully!')
       navigate('/transactions')
-    } catch (error) {
+    } catch {
       toast.error('Failed to add transaction')
     } finally {
       setLoading(false)
@@ -48,11 +48,11 @@ const AddTransactionPage = () => {
 
   const handleTypeChange = (type) => {
     setTransactionType(type)
-    reset({
-      ...register,
+    reset((prev) => ({
+      ...prev,
       type,
       category: '',
-    })
+    }))
   }
 
   return (
@@ -87,11 +87,10 @@ const AddTransactionPage = () => {
               <button
                 type="button"
                 onClick={() => handleTypeChange(TRANSACTION_TYPES.INCOME)}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                  transactionType === TRANSACTION_TYPES.INCOME
-                    ? 'border-success bg-success/10 text-success'
-                    : 'border-gray-300 dark:border-gray-600 hover:border-success/50'
-                }`}
+                className={`p-4 rounded-lg border-2 transition-all duration-200 ${transactionType === TRANSACTION_TYPES.INCOME
+                  ? 'border-success bg-success/10 text-success'
+                  : 'border-gray-300 dark:border-gray-600 hover:border-success/50'
+                  }`}
               >
                 <div className="flex items-center justify-center space-x-2">
                   <div className="w-8 h-8 bg-success/20 rounded-lg flex items-center justify-center">
@@ -103,11 +102,10 @@ const AddTransactionPage = () => {
               <button
                 type="button"
                 onClick={() => handleTypeChange(TRANSACTION_TYPES.EXPENSE)}
-                className={`p-4 rounded-lg border-2 transition-all duration-200 ${
-                  transactionType === TRANSACTION_TYPES.EXPENSE
-                    ? 'border-error bg-error/10 text-error'
-                    : 'border-gray-300 dark:border-gray-600 hover:border-error/50'
-                }`}
+                className={`p-4 rounded-lg border-2 transition-all duration-200 ${transactionType === TRANSACTION_TYPES.EXPENSE
+                  ? 'border-error bg-error/10 text-error'
+                  : 'border-gray-300 dark:border-gray-600 hover:border-error/50'
+                  }`}
               >
                 <div className="flex items-center justify-center space-x-2">
                   <div className="w-8 h-8 bg-error/20 rounded-lg flex items-center justify-center">

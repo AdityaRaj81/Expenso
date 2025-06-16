@@ -34,7 +34,7 @@ const LoginPage = () => {
       await dispatch(loginUser(data)).unwrap()
       toast.success('Welcome back!')
       navigate('/dashboard')
-    } catch (error) {
+    } catch {
       // Error is handled by the slice and toast
     }
   }
@@ -52,7 +52,7 @@ const LoginPage = () => {
               Expenso
             </span>
           </Link>
-          
+
           <h2 className="text-3xl font-heading font-bold text-text-primary dark:text-dark-text">
             Welcome back
           </h2>

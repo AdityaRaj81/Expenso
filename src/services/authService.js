@@ -20,19 +20,19 @@ const authService = {
     return { message: 'Refresh token not implemented yet.' }
   },
 
-  async forgotPassword(email) {
+  async forgotPassword() {
     return { message: 'Forgot password not implemented yet.' }
   },
 
-  async resetPassword(token, password) {
+  async resetPassword() {
     return { message: 'Reset password not implemented yet.' }
   },
 
-  async updateProfile(userData) {
+  async updateProfile() {
     return { message: 'Update profile not implemented yet.' }
   },
 
-  async changePassword(passwordData) {
+  async changePassword() {
     return { message: 'Change password not implemented yet.' }
   },
 }

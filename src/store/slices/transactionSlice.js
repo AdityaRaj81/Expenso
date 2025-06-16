@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import transactionService from '../../services/transactionService'
+import api from '../../services/api'
 
 // Async thunks
 export const fetchTransactions = createAsyncThunk(
@@ -18,8 +19,8 @@ export const createTransaction = createAsyncThunk(
   'transactions/createTransaction',
   async (transactionData, { rejectWithValue }) => {
     try {
-      const response = await transactionService.createTransaction(transactionData)
-      return response
+      const response = await api.post('/transactions/add', transactionData)
+      return response.data
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to create transaction')
     }
@@ -129,7 +130,7 @@ const transactionSlice = createSlice({
         state.loading = false
         state.error = action.payload
       })
-      
+
       // Create transaction
       .addCase(createTransaction.pending, (state) => {
         state.loading = true
@@ -143,7 +144,7 @@ const transactionSlice = createSlice({
         state.loading = false
         state.error = action.payload
       })
-      
+
       // Update transaction
       .addCase(updateTransaction.fulfilled, (state, action) => {
         const index = state.transactions.findIndex(t => t.id === action.payload.id)
@@ -151,12 +152,12 @@ const transactionSlice = createSlice({
           state.transactions[index] = action.payload
         }
       })
-      
+
       // Delete transaction
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.transactions = state.transactions.filter(t => t.id !== action.payload)
       })
-      
+
       // Fetch dashboard data
       .addCase(fetchDashboardData.pending, (state) => {
         state.loading = true
