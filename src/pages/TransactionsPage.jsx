@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Download, 
-  Edit, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Filter,
+  Download,
+  Edit,
+  Trash2,
   Calendar,
   ArrowUpDown,
   ChevronLeft,
@@ -29,14 +29,14 @@ const TransactionsPage = () => {
   const allCategories = [...EXPENSE_CATEGORIES, ...INCOME_CATEGORIES]
 
   useEffect(() => {
-    dispatch(fetchTransactions({ 
-      page: pagination.page, 
+    dispatch(fetchTransactions({
+      page: pagination.page,
       limit: pagination.limit,
       ...filters,
       sortBy,
       sortOrder
     }))
-  }, [dispatch, pagination.page, filters, sortBy, sortOrder])
+  }, [dispatch, pagination.page, pagination.limit, filters, sortBy, sortOrder])
 
   const handleFilterChange = (key, value) => {
     dispatch(setFilters({ [key]: value }))
@@ -51,7 +51,7 @@ const TransactionsPage = () => {
       try {
         await dispatch(deleteTransaction(id)).unwrap()
         toast.success('Transaction deleted successfully')
-      } catch (error) {
+      } catch {
         toast.error('Failed to delete transaction')
       }
     }
@@ -67,8 +67,8 @@ const TransactionsPage = () => {
   }
 
   const handlePageChange = (page) => {
-    dispatch(fetchTransactions({ 
-      page, 
+    dispatch(fetchTransactions({
+      page,
       limit: pagination.limit,
       ...filters,
       sortBy,
@@ -268,9 +268,8 @@ const TransactionsPage = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center space-x-3">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                            transaction.type === 'INCOME' ? 'bg-success/10' : 'bg-error/10'
-                          }`}>
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${transaction.type === 'INCOME' ? 'bg-success/10' : 'bg-error/10'
+                            }`}>
                             <span className="text-sm">
                               {getCategoryIcon(transaction.category, allCategories)}
                             </span>
@@ -284,18 +283,16 @@ const TransactionsPage = () => {
                         {getCategoryName(transaction.category, allCategories)}
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`font-mono font-semibold ${
-                          transaction.type === 'INCOME' ? 'text-success' : 'text-error'
-                        }`}>
+                        <span className={`font-mono font-semibold ${transaction.type === 'INCOME' ? 'text-success' : 'text-error'
+                          }`}>
                           {transaction.type === 'INCOME' ? '+' : '-'}{formatCurrency(transaction.amount)}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                          transaction.type === 'INCOME' 
-                            ? 'bg-success/10 text-success' 
+                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${transaction.type === 'INCOME'
+                            ? 'bg-success/10 text-success'
                             : 'bg-error/10 text-error'
-                        }`}>
+                          }`}>
                           {transaction.type}
                         </span>
                       </td>
@@ -327,9 +324,8 @@ const TransactionsPage = () => {
                 <div key={transaction.id} className="bg-surface/50 dark:bg-gray-700/50 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        transaction.type === 'INCOME' ? 'bg-success/10' : 'bg-error/10'
-                      }`}>
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${transaction.type === 'INCOME' ? 'bg-success/10' : 'bg-error/10'
+                        }`}>
                         <span className="text-lg">
                           {getCategoryIcon(transaction.category, allCategories)}
                         </span>
@@ -344,9 +340,8 @@ const TransactionsPage = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`font-mono font-semibold ${
-                        transaction.type === 'INCOME' ? 'text-success' : 'text-error'
-                      }`}>
+                      <p className={`font-mono font-semibold ${transaction.type === 'INCOME' ? 'text-success' : 'text-error'
+                        }`}>
                         {transaction.type === 'INCOME' ? '+' : '-'}{formatCurrency(transaction.amount)}
                       </p>
                       <p className="text-sm text-text-secondary dark:text-gray-400">
@@ -355,11 +350,10 @@ const TransactionsPage = () => {
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                      transaction.type === 'INCOME' 
-                        ? 'bg-success/10 text-success' 
+                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${transaction.type === 'INCOME'
+                        ? 'bg-success/10 text-success'
                         : 'bg-error/10 text-error'
-                    }`}>
+                      }`}>
                       {transaction.type}
                     </span>
                     <div className="flex items-center space-x-2">
