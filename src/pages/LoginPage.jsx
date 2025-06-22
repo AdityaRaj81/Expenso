@@ -31,10 +31,15 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(loginUser(data)).unwrap()
+      const response = await dispatch(loginUser(data)).unwrap()
+
+      localStorage.setItem('token', response.token)
+      localStorage.setItem('user', JSON.stringify(response.user))
+
       toast.success('Welcome back!')
       navigate('/dashboard')
     } catch {
+      toast.error('Login failed')
       // Error is handled by the slice and toast
     }
   }
