@@ -80,13 +80,18 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        console.log("🚀 LOGIN PAYLOAD:", action.payload);
         state.loading = false
         state.user = action.payload.user
         state.token = action.payload.token
         state.isAuthenticated = true
         state.error = null
-        localStorage.setItem('token', action.payload.token)
-        localStorage.setItem('user', JSON.stringify(action.payload.user))
+        if (action.payload.token && typeof action.payload.token === 'string') {
+          localStorage.setItem('token', action.payload.token)
+          localStorage.setItem('user', JSON.stringify(action.payload.user))
+        } else {
+          console.error('❌ Invalid token received:', action.payload.token)
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false
