@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { ArrowLeft, DollarSign, Calendar, Tag, FileText } from 'lucide-react'
-import { createTransaction } from '../store/slices/transactionSlice'
+import { createTransaction, fetchDashboardData } from '../store/slices/transactionSlice'
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES, TRANSACTION_TYPES } from '../utils/constants'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
@@ -36,6 +36,8 @@ const AddTransactionPage = () => {
         amount: parseFloat(data.amount),
         type: transactionType,
       })).unwrap()
+
+      dispatch(fetchDashboardData())
 
       toast.success('Transaction added successfully!')
       navigate('/transactions')
