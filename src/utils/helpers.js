@@ -1,10 +1,10 @@
 import { format, parseISO, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth, startOfYear, endOfYear, subDays, subWeeks, subMonths } from 'date-fns'
 import { DATE_RANGES } from './constants'
 
-export const formatCurrency = (amount, currency = 'USD') => {
-  return new Intl.NumberFormat('en-US', {
+export const formatCurrency = (amount) => {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: currency,
+    currency: 'INR',
     minimumFractionDigits: 2,
   }).format(amount)
 }
@@ -23,41 +23,44 @@ export const formatDateTime = (date) => {
 
 export const getDateRange = (range) => {
   const now = new Date()
-  
+
   switch (range) {
     case DATE_RANGES.TODAY:
       return {
         start: startOfDay(now),
         end: endOfDay(now),
       }
-    case DATE_RANGES.YESTERDAY:
+    case DATE_RANGES.YESTERDAY: {
       const yesterday = subDays(now, 1)
       return {
         start: startOfDay(yesterday),
         end: endOfDay(yesterday),
       }
+    }
     case DATE_RANGES.THIS_WEEK:
       return {
         start: startOfWeek(now),
         end: endOfWeek(now),
       }
-    case DATE_RANGES.LAST_WEEK:
+    case DATE_RANGES.LAST_WEEK: {
       const lastWeek = subWeeks(now, 1)
       return {
         start: startOfWeek(lastWeek),
         end: endOfWeek(lastWeek),
       }
+    }
     case DATE_RANGES.THIS_MONTH:
       return {
         start: startOfMonth(now),
         end: endOfMonth(now),
       }
-    case DATE_RANGES.LAST_MONTH:
+    case DATE_RANGES.LAST_MONTH: {
       const lastMonth = subMonths(now, 1)
       return {
         start: startOfMonth(lastMonth),
         end: endOfMonth(lastMonth),
       }
+    }
     case DATE_RANGES.THIS_YEAR:
       return {
         start: startOfYear(now),
