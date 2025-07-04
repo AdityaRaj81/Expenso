@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import { Link } from 'react-router-dom'
 import {
   Plus,
@@ -26,17 +27,31 @@ const TransactionsPage = () => {
   const [sortBy, setSortBy] = useState('date')
   const [sortOrder, setSortOrder] = useState('desc')
 
-  const allCategories = [...EXPENSE_CATEGORIES, ...INCOME_CATEGORIES]
+  const categories = [...EXPENSE_CATEGORIES, ...INCOME_CATEGORIES];
+  const allCategories = [...EXPENSE_CATEGORIES, ...INCOME_CATEGORIES];
 
-  useEffect(() => {
+
+  const handleApplyFilters = () => {
     dispatch(fetchTransactions({
-      page: pagination.page,
+      page: 1,
       limit: pagination.limit,
       ...filters,
       sortBy,
       sortOrder
     }))
-  }, [dispatch, pagination.page, pagination.limit, filters, sortBy, sortOrder])
+  }
+
+
+
+  // useEffect(() => {
+  //   dispatch(fetchTransactions({
+  //     page: pagination.page,
+  //     limit: pagination.limit,
+  //     ...filters,
+  //     sortBy,
+  //     sortOrder
+  //   }))
+  // }, [dispatch, pagination.page, pagination.limit, filters, sortBy, sortOrder])
 
   const handleFilterChange = (key, value) => {
     dispatch(setFilters({ [key]: value }))
@@ -117,92 +132,92 @@ const TransactionsPage = () => {
 
       {/* Filters */}
       {showFilters && (
-        <div className="card">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Search */}
-            <div>
-              <label className="block text-sm font-medium text-text-primary dark:text-dark-text mb-2">
-                Search
-              </label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-secondary dark:text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search transactions..."
-                  value={filters.search}
-                  onChange={(e) => handleFilterChange('search', e.target.value)}
-                  className="form-input pl-10"
-                />
-              </div>
+        <div className="w-full bg-dark-card rounded-md shadow-md p-4 mt-4 overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="flex flex-col">
+              <label className="text-sm text-white mb-1">Search</label>
+              <input
+                type="text"
+                placeholder="Search transactions..."
+                value={filters.search}
+                onChange={(e) => handleFilterChange('search', e.target.value)}
+                className="w-full px-3 py-2 rounded-md border border-gray-600 bg-dark-bg text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              />
             </div>
 
-            {/* Type */}
-            <div>
-              <label className="block text-sm font-medium text-text-primary dark:text-dark-text mb-2">
-                Type
-              </label>
+            <div className="flex flex-col">
+              <label className="text-sm text-white mb-1">Type</label>
               <select
                 value={filters.type}
                 onChange={(e) => handleFilterChange('type', e.target.value)}
-                className="form-input"
+                className="w-full px-3 py-2 rounded-md border border-gray-600 bg-dark-bg text-white focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="">All Types</option>
-                <option value={TRANSACTION_TYPES.INCOME}>Income</option>
-                <option value={TRANSACTION_TYPES.EXPENSE}>Expense</option>
+                <option value="INCOME">Income</option>
+                <option value="EXPENSE">Expense</option>
               </select>
             </div>
 
-            {/* Category */}
-            <div>
-              <label className="block text-sm font-medium text-text-primary dark:text-dark-text mb-2">
-                Category
-              </label>
+            <div className="flex flex-col">
+              <label className="text-sm text-white mb-1">Category</label>
               <select
                 value={filters.category}
                 onChange={(e) => handleFilterChange('category', e.target.value)}
-                className="form-input"
+                className="w-full px-3 py-2 rounded-md border border-gray-600 bg-dark-bg text-white focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="">All Categories</option>
-                {allCategories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.icon} {category.name}
-                  </option>
-                ))}
+                {Array.isArray(categories) && categories.length > 0 ? (
+                  categories.map((cat) => (
+                    <option key={cat.id || cat._id || cat.name} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>Loading...</option>
+                )}
+
               </select>
             </div>
 
-            {/* Date Range */}
-            <div>
-              <label className="block text-sm font-medium text-text-primary dark:text-dark-text mb-2">
-                Date Range
-              </label>
-              <div className="flex space-x-2">
-                <input
-                  type="date"
-                  value={filters.dateFrom}
-                  onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-                  className="form-input text-sm"
-                />
-                <input
-                  type="date"
-                  value={filters.dateTo}
-                  onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-                  className="form-input text-sm"
-                />
-              </div>
+            <div className="flex flex-col">
+              <label className="text-sm text-white mb-1">Date From</label>
+              <input
+                type="date"
+                value={filters.dateFrom || ''}
+                onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
+                className="w-full px-3 py-2 rounded-md border border-gray-600 bg-dark-bg text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="text-sm text-white mb-1">Date To</label>
+              <input
+                type="date"
+                value={filters.dateTo || ''}
+                onChange={(e) => handleFilterChange('dateTo', e.target.value)}
+                className="w-full px-3 py-2 rounded-md border border-gray-600 bg-dark-bg text-white focus:outline-none focus:ring-2 focus:ring-primary"
+              />
             </div>
           </div>
 
-          <div className="flex justify-end mt-4">
+          {/* Action Buttons */}
+          <div className="flex justify-end items-center gap-4 mt-4">
             <button
               onClick={handleClearFilters}
-              className="px-4 py-2 text-sm text-text-secondary dark:text-gray-400 hover:text-text-primary dark:hover:text-dark-text"
+              className="text-sm text-white hover:text-red-400 transition duration-150"
             >
               Clear Filters
+            </button>
+            <button
+              onClick={handleApplyFilters}
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-4 py-2 rounded-md text-sm"
+            >
+              Apply Filters
             </button>
           </div>
         </div>
       )}
+
 
       {/* Transactions Table */}
       <div className="card overflow-hidden">
@@ -290,8 +305,8 @@ const TransactionsPage = () => {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${transaction.type === 'INCOME'
-                            ? 'bg-success/10 text-success'
-                            : 'bg-error/10 text-error'
+                          ? 'bg-success/10 text-success'
+                          : 'bg-error/10 text-error'
                           }`}>
                           {transaction.type}
                         </span>
@@ -351,8 +366,8 @@ const TransactionsPage = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${transaction.type === 'INCOME'
-                        ? 'bg-success/10 text-success'
-                        : 'bg-error/10 text-error'
+                      ? 'bg-success/10 text-success'
+                      : 'bg-error/10 text-error'
                       }`}>
                       {transaction.type}
                     </span>
